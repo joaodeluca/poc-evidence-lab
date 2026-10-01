@@ -1,0 +1,370 @@
+{
+  "classification": "SYNTHETIC_APP_ACTUALLY_EXECUTED",
+  "created_at": "2026-10-01T19:32:10.070368+00:00",
+  "scope": "Aplicação própria isolada, dados e falhas deliberados; não software de cliente.",
+  "artifacts": {
+    "PLAN.md": "960580a7c71c066569568aefce22b8c2329c8f89845fa6af0829849348f8748a",
+    "app.py": "706e4acb3e904c8aa0cb78725632150a50eba77b9dece13c6c5cef5045f4265c",
+    "run.py": "c71ad68565c46c961df9372b3ef9bd6c0ef7149f3cde074e011fefbddd12468c"
+  },
+  "runs": [
+    {
+      "version": "broken",
+      "checks": [
+        {
+          "check_id": "BENCH-EXPORT",
+          "status": "failed",
+          "observation_ids": [
+            "broken-http-01",
+            "broken-http-02"
+          ],
+          "detail": {
+            "query_ids": [
+              "P001",
+              "P003"
+            ],
+            "csv_ids": [
+              "P001",
+              "P002",
+              "P003"
+            ]
+          },
+          "claim_scope": "Critério local do benchmark, não conformidade integral de requisito público."
+        },
+        {
+          "check_id": "BENCH-PERMISSION",
+          "status": "failed",
+          "observation_ids": [
+            "broken-http-03",
+            "broken-http-04",
+            "broken-http-05"
+          ],
+          "detail": {
+            "attempt_status": 200,
+            "state_preserved": false
+          },
+          "claim_scope": "Critério local do benchmark, não conformidade integral de requisito público."
+        },
+        {
+          "check_id": "BENCH-AUDIT",
+          "status": "failed",
+          "observation_ids": [
+            "broken-http-06",
+            "broken-http-07"
+          ],
+          "detail": {
+            "expected_event": {
+              "entity_id": "P001",
+              "action": "update",
+              "actor": "editor"
+            },
+            "events_observed": []
+          },
+          "claim_scope": "Critério local do benchmark, não conformidade integral de requisito público."
+        }
+      ],
+      "http_observations": [
+        {
+          "id": "broken-http-01",
+          "at": "2026-10-01T19:32:10.080889+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/records?category=infraestrutura",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"id\": \"P001\", \"title\": \"Manutenção de iluminação\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}, {\"id\": \"P003\", \"title\": \"Manutenção de rede\", \"category\": \"infraestrutura\", \"status\": \"fechado\"}]",
+            "sha256": "7d4d2e1b3f03f8e0a8052b9195ccf5da07b195c9bca5357fd3563d69f0f06f10"
+          }
+        },
+        {
+          "id": "broken-http-02",
+          "at": "2026-10-01T19:32:10.081267+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/export.csv?category=infraestrutura",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "text/csv; charset=utf-8",
+            "body": "id,title,category,status\r\nP001,Manutenção de iluminação,infraestrutura,aberto\r\nP002,Aquisição de mobiliário,compras,aberto\r\nP003,Manutenção de rede,infraestrutura,fechado\r\n",
+            "sha256": "03928a29790ff4d8300685b4a4940c3949e39e3582e2e5e0e28e700c9c523e7d"
+          }
+        },
+        {
+          "id": "broken-http-03",
+          "at": "2026-10-01T19:32:10.081561+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/records",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"id\": \"P001\", \"title\": \"Manutenção de iluminação\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}, {\"id\": \"P002\", \"title\": \"Aquisição de mobiliário\", \"category\": \"compras\", \"status\": \"aberto\"}, {\"id\": \"P003\", \"title\": \"Manutenção de rede\", \"category\": \"infraestrutura\", \"status\": \"fechado\"}]",
+            "sha256": "040d0f41e137d420580b8a47339be7fa77bbb7b8046b7c6410f4fc2e2e99e858"
+          }
+        },
+        {
+          "id": "broken-http-04",
+          "at": "2026-10-01T19:32:10.081788+00:00",
+          "request": {
+            "method": "PATCH",
+            "path": "/records/P001",
+            "synthetic_role": "viewer",
+            "body": {
+              "title": "Mudança que deveria ser proibida"
+            }
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "{\"id\": \"P001\", \"title\": \"Mudança que deveria ser proibida\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}",
+            "sha256": "7c7e0bd6b5c42285a55a6f0879751497b1e8e3ef536637d37607c3c8753fa6cc"
+          }
+        },
+        {
+          "id": "broken-http-05",
+          "at": "2026-10-01T19:32:10.082064+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/records",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"id\": \"P001\", \"title\": \"Mudança que deveria ser proibida\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}, {\"id\": \"P002\", \"title\": \"Aquisição de mobiliário\", \"category\": \"compras\", \"status\": \"aberto\"}, {\"id\": \"P003\", \"title\": \"Manutenção de rede\", \"category\": \"infraestrutura\", \"status\": \"fechado\"}]",
+            "sha256": "dd6d364c600b2e1551c045e09c35da578002fc3bd6c2fa21749eb9ab950dfc3e"
+          }
+        },
+        {
+          "id": "broken-http-06",
+          "at": "2026-10-01T19:32:10.082325+00:00",
+          "request": {
+            "method": "PATCH",
+            "path": "/records/P001",
+            "synthetic_role": "editor",
+            "body": {
+              "title": "Mudança autorizada de demonstração"
+            }
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "{\"id\": \"P001\", \"title\": \"Mudança autorizada de demonstração\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}",
+            "sha256": "8da72a338c41be2da384b3c782a21717e4565b22d51c36214d0caff53c6b2aa4"
+          }
+        },
+        {
+          "id": "broken-http-07",
+          "at": "2026-10-01T19:32:10.082556+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/audit",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[]",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        }
+      ]
+    },
+    {
+      "version": "fixed",
+      "checks": [
+        {
+          "check_id": "BENCH-EXPORT",
+          "status": "passed",
+          "observation_ids": [
+            "fixed-http-01",
+            "fixed-http-02"
+          ],
+          "detail": {
+            "query_ids": [
+              "P001",
+              "P003"
+            ],
+            "csv_ids": [
+              "P001",
+              "P003"
+            ]
+          },
+          "claim_scope": "Critério local do benchmark, não conformidade integral de requisito público."
+        },
+        {
+          "check_id": "BENCH-PERMISSION",
+          "status": "passed",
+          "observation_ids": [
+            "fixed-http-03",
+            "fixed-http-04",
+            "fixed-http-05"
+          ],
+          "detail": {
+            "attempt_status": 403,
+            "state_preserved": true
+          },
+          "claim_scope": "Critério local do benchmark, não conformidade integral de requisito público."
+        },
+        {
+          "check_id": "BENCH-AUDIT",
+          "status": "passed",
+          "observation_ids": [
+            "fixed-http-06",
+            "fixed-http-07"
+          ],
+          "detail": {
+            "expected_event": {
+              "entity_id": "P001",
+              "action": "update",
+              "actor": "editor"
+            },
+            "events_observed": [
+              {
+                "entity_id": "P001",
+                "action": "update",
+                "actor": "editor"
+              }
+            ]
+          },
+          "claim_scope": "Critério local do benchmark, não conformidade integral de requisito público."
+        }
+      ],
+      "http_observations": [
+        {
+          "id": "fixed-http-01",
+          "at": "2026-10-01T19:32:10.587369+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/records?category=infraestrutura",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"id\": \"P001\", \"title\": \"Manutenção de iluminação\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}, {\"id\": \"P003\", \"title\": \"Manutenção de rede\", \"category\": \"infraestrutura\", \"status\": \"fechado\"}]",
+            "sha256": "7d4d2e1b3f03f8e0a8052b9195ccf5da07b195c9bca5357fd3563d69f0f06f10"
+          }
+        },
+        {
+          "id": "fixed-http-02",
+          "at": "2026-10-01T19:32:10.587941+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/export.csv?category=infraestrutura",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "text/csv; charset=utf-8",
+            "body": "id,title,category,status\r\nP001,Manutenção de iluminação,infraestrutura,aberto\r\nP003,Manutenção de rede,infraestrutura,fechado\r\n",
+            "sha256": "e900484e5e46d99487c5ddb1372204b71a74bc445ae8b52152a9165bf16fd8bf"
+          }
+        },
+        {
+          "id": "fixed-http-03",
+          "at": "2026-10-01T19:32:10.588508+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/records",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"id\": \"P001\", \"title\": \"Manutenção de iluminação\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}, {\"id\": \"P002\", \"title\": \"Aquisição de mobiliário\", \"category\": \"compras\", \"status\": \"aberto\"}, {\"id\": \"P003\", \"title\": \"Manutenção de rede\", \"category\": \"infraestrutura\", \"status\": \"fechado\"}]",
+            "sha256": "040d0f41e137d420580b8a47339be7fa77bbb7b8046b7c6410f4fc2e2e99e858"
+          }
+        },
+        {
+          "id": "fixed-http-04",
+          "at": "2026-10-01T19:32:10.589119+00:00",
+          "request": {
+            "method": "PATCH",
+            "path": "/records/P001",
+            "synthetic_role": "viewer",
+            "body": {
+              "title": "Mudança que deveria ser proibida"
+            }
+          },
+          "response": {
+            "status": 403,
+            "content_type": "application/json; charset=utf-8",
+            "body": "{\"error\": \"forbidden\"}",
+            "sha256": "387fe73d9abe7e6c32a0eb6113efea98dea609edefe9c3b4c9788fcaaef1603b"
+          }
+        },
+        {
+          "id": "fixed-http-05",
+          "at": "2026-10-01T19:32:10.589724+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/records",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"id\": \"P001\", \"title\": \"Manutenção de iluminação\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}, {\"id\": \"P002\", \"title\": \"Aquisição de mobiliário\", \"category\": \"compras\", \"status\": \"aberto\"}, {\"id\": \"P003\", \"title\": \"Manutenção de rede\", \"category\": \"infraestrutura\", \"status\": \"fechado\"}]",
+            "sha256": "040d0f41e137d420580b8a47339be7fa77bbb7b8046b7c6410f4fc2e2e99e858"
+          }
+        },
+        {
+          "id": "fixed-http-06",
+          "at": "2026-10-01T19:32:10.590243+00:00",
+          "request": {
+            "method": "PATCH",
+            "path": "/records/P001",
+            "synthetic_role": "editor",
+            "body": {
+              "title": "Mudança autorizada de demonstração"
+            }
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "{\"id\": \"P001\", \"title\": \"Mudança autorizada de demonstração\", \"category\": \"infraestrutura\", \"status\": \"aberto\"}",
+            "sha256": "8da72a338c41be2da384b3c782a21717e4565b22d51c36214d0caff53c6b2aa4"
+          }
+        },
+        {
+          "id": "fixed-http-07",
+          "at": "2026-10-01T19:32:10.590769+00:00",
+          "request": {
+            "method": "GET",
+            "path": "/audit",
+            "synthetic_role": "viewer",
+            "body": null
+          },
+          "response": {
+            "status": 200,
+            "content_type": "application/json; charset=utf-8",
+            "body": "[{\"entity_id\": \"P001\", \"action\": \"update\", \"actor\": \"editor\"}]",
+            "sha256": "189d65a6ac9bdc6e169e8f6b7df2408d9af80760aa9641cff27f2369c0329fe9"
+          }
+        }
+      ]
+    }
+  ],
+  "not_verified": [
+    "Certificações, hospedagem, SLA, legislação e adequação integral de qualquer edital.",
+    "Software desconhecido, extração automática de todo edital e testes de navegador.",
+    "Authenticação de produção: o papel via cabeçalho é apenas simulação local."
+  ]
+}
